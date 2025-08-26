@@ -17,19 +17,23 @@ Redocly CLI is a versatile command-line tool designed to work with OpenAPI specs
 ### Installation and Example Commands
 
 ```
-
 # Install globally
-
 pnpm add -g @redocly/cli
+```
 
-# Lint API spec
+#### Lint API spec
 
+```
 redocly lint openapi.yaml
+```
 
-# Bundle multi-file spec into one
+- Bundle multi-file spec into one
 
+```
 redocly bundle docs/openapi.yaml -o dist/openapi-bundle.yaml
+```
 
+```
 # Generate HTML documentation
 
 redocly build-docs docs/openapi.yaml -o dist/openapi-docs.html
@@ -87,3 +91,7 @@ prism proxy openapi.yaml https://api.backend.local
 6. **Integrate checks and docs generation in CI pipelines**
 
 ---
+
+```
+
+```
