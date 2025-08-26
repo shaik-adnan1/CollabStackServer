@@ -1,9 +1,3 @@
-# Open API setup DOCS.
-
-## Contracts writtend based of feature Slices.
-
-# Tooling used.
-
 # OpenAPI Contract Tooling
 
 ## This project uses modern tools to develop, lint, bundle, document, and mock OpenAPI contracts. Below are details on the main tooling: **Redocly CLI** and **Stoplight Prism CLI**.
