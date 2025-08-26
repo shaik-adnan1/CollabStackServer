@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>OpenAPI Contract Tooling</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="openapi-contract-tooling">OpenAPI Contract Tooling</h1>
+<h2 id="this-project-uses-modern-tools-to-develop-lint-bundle-document-and-mock-openapi-contracts-below-are-details-on-the-main-tooling-redocly-cli-and-stoplight-prism-cli">This project uses modern tools to develop, lint, bundle, document, and mock OpenAPI contracts. Below are details on the main tooling: <strong>Redocly CLI</strong> and <strong>Stoplight Prism CLI</strong>.</h2>
+<h2 id="redocly-cli">Redocly CLI</h2>
+<p>Redocly CLI is a versatile command-line tool designed to work with OpenAPI specs throughout the API lifecycle. It helps you enforce quality, bundle multi-file specs, generate documentation, and integrate governance rules into your workflow[web:1][web:2][web:5].</p>
+<h3 id="features">Features</h3>
+<ul>
+<li><strong>Linting:</strong> Check your API spec for correctness, style, and best practices</li>
+<li><strong>Bundling/Splitting:</strong> Combine and modularize specs for clarity and reuse</li>
+<li><strong>Documentation:</strong> Instantly generate beautiful API docs from YAML/JSON</li>
+<li><strong>Governance:</strong> Enforce your own or recommended rulesets via <code>redocly.yaml</code></li>
+<li><strong>CI/CD Integration:</strong> Automate checks and docs generation in your pipelines</li>
+</ul>
+<h3 id="installation-and-example-commands">Installation and Example Commands</h3>
+<pre><code># Install globally
+pnpm add -g @redocly/cli
+</code></pre>
+<h4 id="lint-api-spec">Lint API spec</h4>
+<pre><code>redocly lint openapi.yaml
+</code></pre>
+<ul>
+<li>Bundle multi-file spec into one</li>
+</ul>
+<pre><code>redocly bundle docs/openapi.yaml -o dist/openapi-bundle.yaml
+</code></pre>
+<pre><code># Generate HTML documentation
+
+redocly build-docs docs/openapi.yaml -o dist/openapi-docs.html
+
+# Preview docs locally
+
+redocly preview-docs openapi.yaml
+
+</code></pre>
+<hr>
+<h2 id="stoplight-prism-cli">Stoplight Prism CLI</h2>
+<p>Stoplight Prism CLI is an open-source tool for mocking and proxying REST APIs based directly on OpenAPI specs. It makes local development and contract testing much faster by allowing front-end and integration developers to work before the backend is ready[web:6][web:9][web:12].</p>
+<h3 id="features-1">Features</h3>
+<ul>
+<li><strong>Mock Server:</strong> Return realistic or static responses from your OpenAPI contract</li>
+<li><strong>Proxy:</strong> Forward requests to a live server, validating requests with your spec</li>
+<li><strong>Custom Behavior:</strong> Dynamically customize responses, status codes, and errors</li>
+<li><strong>Quick Start for CI/CD:</strong> Works with Docker, Node, and CLI in your pipelines</li>
+</ul>
+<h3 id="installation-and-example-commands-1">Installation and Example Commands</h3>
+<pre><code>
+# Install globally
+
+pnpm add -g @stoplight/prism-cli
+
+# In this project installed as a dev dependency
+
+pnpm
+
+# Start mock server from OpenAPI file
+
+prism mock openapi.yaml
+
+# Start proxy server for backend
+
+prism proxy openapi.yaml https://api.backend.local
+
+</code></pre>
+<hr>
+<h2 id="typical-workflow">Typical Workflow</h2>
+<ol>
+<li><strong>Define or edit OpenAPI specs</strong> (YAML/JSON)</li>
+<li><strong>Lint and validate</strong> with Redocly CLI, using enforceable rulesets</li>
+<li><strong>Bundle and split specs</strong> as needed for modularity and distribution</li>
+<li><strong>Preview and publish documentation</strong> via Redocly CLI or hosted portal</li>
+<li><strong>Mock endpoints</strong> locally with Prism for development/testing</li>
+<li><strong>Integrate checks and docs generation in CI pipelines</strong></li>
+</ol>
+<hr>
+<pre><code>
+</code></pre>
+
+            
+            
+        </body>
+        </html>

@@ -1,6 +1,6 @@
 # OpenAPI Contract Tooling
 
-## This project uses modern tools to develop, lint, bundle, document, and mock OpenAPI contracts. Below are details on the main tooling: **Redocly CLI** and **Stoplight Prism CLI**.
+#### This project uses modern tools to develop, lint, bundle, document, and mock OpenAPI contracts. Below are details on the main tooling: **Redocly CLI** and **Stoplight Prism CLI**.
 
 ## Redocly CLI
 
@@ -16,32 +16,34 @@ Redocly CLI is a versatile command-line tool designed to work with OpenAPI specs
 
 ### Installation and Example Commands
 
+##### Install globally
+
 ```
-# Install globally
 pnpm add -g @redocly/cli
 ```
 
-#### Lint API spec
+##### Lint API spec
 
 ```
 redocly lint openapi.yaml
 ```
 
-- Bundle multi-file spec into one
+##### Bundle multi-file spec into one
 
 ```
 redocly bundle docs/openapi.yaml -o dist/openapi-bundle.yaml
 ```
 
+##### Generate HTML documentation
+
 ```
-# Generate HTML documentation
-
 redocly build-docs docs/openapi.yaml -o dist/openapi-docs.html
+```
 
-# Preview docs locally
+##### Preview docs locally
 
+```
 redocly preview-docs openapi.yaml
-
 ```
 
 ---
@@ -59,24 +61,28 @@ Stoplight Prism CLI is an open-source tool for mocking and proxying REST APIs ba
 
 ### Installation and Example Commands
 
+##### Install globally
+
 ```
-
-# Install globally
-
 pnpm add -g @stoplight/prism-cli
+```
 
 # In this project installed as a dev dependency
 
-pnpm
+```
+pnpm add -D @stoplight/prism-cli
+```
 
-# Start mock server from OpenAPI file
+##### Start mock server from OpenAPI file
 
+```
 prism mock openapi.yaml
+```
 
-# Start proxy server for backend
+##### Start proxy server for backend
 
+```
 prism proxy openapi.yaml https://api.backend.local
-
 ```
 
 ---
@@ -91,7 +97,3 @@ prism proxy openapi.yaml https://api.backend.local
 6. **Integrate checks and docs generation in CI pipelines**
 
 ---
-
-```
-
-```
