@@ -1,0 +1,23 @@
+post:
+  operationId: refreshToken
+  summary: "Rotate Refresh token and issue a new access token"
+  tags: [Auth]
+  security:
+    - bearerAuth: []
+  responses:
+    "200":
+      description: New Access Token issued
+      headers:
+        Set-Cookie:
+          schema: { type: string }
+          description: Rotated httpOnly refresh cookie (old invalidated)
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/commons.yaml#/components/schemas/AuthToken"
+    "401":
+      description: Invalid or expired refresh token
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/commons.yaml#/components/schemas/ErrorResponse"

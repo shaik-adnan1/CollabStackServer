@@ -1,0 +1,13 @@
+post:
+  operationId: logoutUser
+  summary: Logout the user
+  tags: [Auth]
+  responses:
+    "204":
+      description: Logged out, cookies cleared
+    "401":
+      description: No Authenticated
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/commons.yaml#/components/schemas/ErrorResponse"

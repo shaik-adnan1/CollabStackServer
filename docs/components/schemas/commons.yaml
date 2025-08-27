@@ -1,0 +1,33 @@
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          required: [code, message]
+          properties:
+            code: { type: string }
+            message: { type: string }
+            details: { type: object, additionalProperties: true }
+
+    User:
+      type: object
+      required: [id, email]
+      properties:
+        id: { type: string }
+        email: { type: string, format: email }
+        name: { type: string }
+
+    AuthToken:
+      type: object
+      required: [access_token, expires_in]
+      properties:
+        access_token: { type: string, description: "JWT access token" }
+        expires_in:
+          { type: integer, description: "Seconds until expiry (e.g., 900)" }

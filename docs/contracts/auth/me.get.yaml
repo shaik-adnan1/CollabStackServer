@@ -1,0 +1,22 @@
+get:
+  operationId: getCurrentUser
+  summary: Get current user profile
+  tags: [Auth]
+  security:
+    - bearerAuth: []
+  responses:
+    "200":
+      description: Current user
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              user:
+                $ref: "../../components/schemas/commons.yaml#/components/schemas/User"
+    "401":
+      description: Missing / invalid access token
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/commons.yaml#/components/schemas/ErrorResponse"

@@ -1,0 +1,35 @@
+post:
+  operationId: signupUser
+  summary: Create a new user account
+  tags: [Auth]
+  security: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required: [email, password]
+          properties:
+            email: { type: string, format: email }
+            password: { type: string, minLength: 8 }
+            name: { type: string }
+
+  responses:
+    "201":
+      description: Account created
+      headers:
+        Set-Cookie:
+          schema:
+            type: string
+            description: httpOnly refresh token cookie (rotated per refresh)
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/commons.yaml#/components/schemas/AuthToken"
+    "409":
+      description: Email already Exists
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/commons.yaml#/components/schemas/ErrorResponse"

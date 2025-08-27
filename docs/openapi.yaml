@@ -1,0 +1,47 @@
+# OpenAPI/GraphQL contracts, ADRs, architecture diagrams
+# REST contract (for all endpoints)
+
+openapi: 3.1.0
+info:
+  title: CollabStack Auth API
+  version: 1.0.0
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+  - url: http://api.collabstack.test
+x-tagGroups:
+  - name: Auth
+    tags: [Auth]
+tags:
+  - name: Auth
+    description: Authentication endpoints
+
+# Pull in shared components
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas: {}
+
+security:
+  - bearerAuth: []
+
+# $ref to merge the components file
+# (Redocly will deep-merge components)
+x-components:
+  - $ref: "./components/schemas/commons.yaml"
+
+paths:
+  /login:
+    $ref: "./contracts/auth/login.post.yaml"
+  /signup:
+    $ref: "./contracts/auth/signup.post.yaml"
+  /refresh:
+    $ref: "./contracts/auth/refresh.post.yaml"
+  /logout:
+    $ref: "./contracts/auth/logout.post.yaml"
+  /me:
+    $ref: "./contracts/auth/me.get.yaml"

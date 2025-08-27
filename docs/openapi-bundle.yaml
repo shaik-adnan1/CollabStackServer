@@ -1,0 +1,217 @@
+openapi: 3.1.0
+info:
+  title: CollabStack Auth API
+  version: 1.0.0
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+  - url: http://api.collabstack.test
+security:
+  - bearerAuth: []
+tags:
+  - name: Auth
+    description: Authentication endpoints
+paths:
+  /login:
+    post:
+      operationId: loginUser
+      summary: Login with email & password
+      tags:
+        - Auth
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Login Successful
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+              description: httpOnly refresh token cookie
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthToken'
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /signup:
+    post:
+      operationId: signupUser
+      summary: Create a new user account
+      tags:
+        - Auth
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  minLength: 8
+                name:
+                  type: string
+      responses:
+        '201':
+          description: Account created
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+                description: httpOnly refresh token cookie (rotated per refresh)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthToken'
+        '409':
+          description: Email already Exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /refresh:
+    post:
+      operationId: refreshToken
+      summary: Rotate Refresh token and issue a new access token
+      tags:
+        - Auth
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: New Access Token issued
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+              description: Rotated httpOnly refresh cookie (old invalidated)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthToken'
+        '401':
+          description: Invalid or expired refresh token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /logout:
+    post:
+      operationId: logoutUser
+      summary: Logout the user
+      tags:
+        - Auth
+      responses:
+        '204':
+          description: Logged out, cookies cleared
+        '401':
+          description: No Authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /me:
+    get:
+      operationId: getCurrentUser
+      summary: Get current user profile
+      tags:
+        - Auth
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Current user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    $ref: '#/components/schemas/User'
+        '401':
+          description: Missing / invalid access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    AuthToken:
+      type: object
+      required:
+        - access_token
+        - expires_in
+      properties:
+        access_token:
+          type: string
+          description: JWT access token
+        expires_in:
+          type: integer
+          description: Seconds until expiry (e.g., 900)
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          required:
+            - code
+            - message
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            details:
+              type: object
+              additionalProperties: true
+    User:
+      type: object
+      required:
+        - id
+        - email
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+          format: email
+        name:
+          type: string
+x-tagGroups:
+  - name: Auth
+    tags:
+      - Auth
+x-components:
+  - $ref: ./components/schemas/commons.yaml

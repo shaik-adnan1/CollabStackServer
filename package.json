@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "api:lint": "redocly link docs/openapi.yaml",
-    "api:bundle": "redocly bundle docs/openapi.yaml -o "
+    "api:lint": "redocly lint docs/openapi.yaml",
+    "api:bundle": "redocly bundle docs/openapi.yaml -o docs/openapi-bundle.yaml",
+    "api:mock": "pnpm api:bundle && pnpm exec prism mock docs/openapi-bundle.yaml"
   },
   "keywords": [],
   "author": "",
