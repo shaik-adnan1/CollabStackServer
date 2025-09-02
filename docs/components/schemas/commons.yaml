@@ -9,7 +9,7 @@ components:
       type: object
       properties:
         error:
-          type: object
+          type: Array
           required: [code, message]
           properties:
             code: { type: string }

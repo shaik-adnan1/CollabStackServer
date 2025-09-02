@@ -1,0 +1,32 @@
+post:
+  operationId: loginUser
+  summary: Login with email & password
+  tags: [Auth]
+  security: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required: [email, password]
+          properties:
+            email: { type: string, format: email }
+            password: { type: string }
+  responses:
+    "200":
+      description: Login Successful
+      headers:
+        Set-Cookie:
+          schema: { type: string }
+          description: httpOnly refresh token cookie
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/commons.yaml#/components/schemas/AuthToken"
+    "401":
+      description: Invalid credentials
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/commons.yaml#/components/schemas/ErrorResponse"
