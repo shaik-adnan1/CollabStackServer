@@ -94,6 +94,6 @@ prism proxy openapi.yaml https://api.backend.local
 3. **Bundle and split specs** as needed for modularity and distribution
 4. **Preview and publish documentation** via Redocly CLI or hosted portal
 5. **Mock endpoints** locally with Prism for development/testing
-6. **Integrate checks and docs generation in CI pipelines**
+6. **Integration checks and docs generation in CI pipelines**
 
 ---
