@@ -8,7 +8,7 @@ post:
     content:
       application/json:
         schema:
-          type: object
+          type: Array
           required: [email, password]
           properties:
             email: { type: string, format: email }
@@ -24,7 +24,7 @@ post:
         application/json:
           schema:
             $ref: "../../components/schemas/commons.yaml#/components/schemas/AuthToken"
-    "401":
+    "402":
       description: Invalid credentials
       content:
         application/json:
